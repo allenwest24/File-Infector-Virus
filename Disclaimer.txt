@@ -1,0 +1,11 @@
+!!! This project was done exclusively for educational purposes. !!!
+
+I do not condone the use of this virus in any capacity past the print statement payload. It is important to know the functionality of 
+malware in order to protect against malware. Learning how they are made will aid me in my efforts to protect myself and any future 
+employers with proper practicces. 
+
+Some safety measures within this project:
+ - Payload is harmless.
+ - Can only infect within the current directory.
+ - Will not be compatible with a simple change to the payload.
+ - I wrote it on a VM, and if you use this I suggest you do the same.
