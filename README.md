@@ -1,5 +1,5 @@
 # File-Infector-Virus
-Created a self-replicating file-infector virus that will copy itself to a new file within the directory it is executed in, then whenever that file is run, it will happen again.
+Created a self-replicating file-infector virus that will copy itself to a new file within the directory. Then, whenever the infected  file is run, it will execute its normal functionality and infect another file in the directory. 
 
 # Introduction
 
