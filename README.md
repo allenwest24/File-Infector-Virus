@@ -1,7 +1,7 @@
 # File-Infector-Virus
 Created a self-replicating file-infector virus that will copy itself to a new file within the directory. Then, whenever the infected  file is run, it will execute its normal functionality and infect another file in the directory. 
 
-# Introduction
+## Introduction
 
 A virus is a program that reproduces its own code by attaching itself to other executable files in such a way that the virus code is
 executed when the infected executable file is executed. Although thousands of viruses exist today, only a fraction of them are really
@@ -12,7 +12,7 @@ security specialist. The aim of this (final) challenge was to give the student a
 may use to infect other programs in order to propagate and survive. Viruses, in fact, are nothing magical (wake up Hollywood! ;-)) and  
 it is no problem for any advanced programmer to write a simple virus in a short period of time.
 
-# Detailed Description
+## Detailed Description
 
 Wrote a simple Linux virus that infects one Linux ELF executable at a time in the directory that it is started in.
 Remember, this is a virus, so it has to reproduce itself. That is, whenever an infected program is executed, the virus will find another file and should infect it. Furthermore, files that have already been infected should not be infected again.
