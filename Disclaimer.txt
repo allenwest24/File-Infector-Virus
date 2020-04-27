@@ -7,5 +7,6 @@ employers with proper practicces.
 Some safety measures within this project:
  - Payload is harmless.
  - Can only infect within the current directory.
- - Will not be compatible with a simple change to the payload.
+ - If anyone tries to use this as a foundation to make a more harmful virus they would have to change quite a bit of the
+   memory organization within the virus, which means they could have probably made this themselves.
  - I wrote it on a VM, and if you use this I suggest you do the same.
